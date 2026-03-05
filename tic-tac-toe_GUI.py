@@ -63,7 +63,21 @@ def CPU(player_clicked):
         
         # Finding empty btn after player move
         emptyButtons = [btn for btn in Buttons if btn.cget("text") == ""]        
-              
+
+        for btn in emptyButtons:
+            btn.config(text=CPU_Move)
+            if checkWin(CPU_Move):
+                btn.config(state="disabled")
+                return endGame("CPU")
+            btn.config(text="")
+          
+        for btn in emptyButtons:
+            btn.config(text=Player_Move)
+            if checkWin(Player_Move):
+                btn.config(text=CPU_Move, state="disabled")
+                return
+            btn.config(text="")
+        
         # Computer Move
         if emptyButtons:
             cpuChoice = random.choice(emptyButtons)
@@ -115,6 +129,7 @@ title = tk.Label(root, text="TIC-TAC-TOE",font=("Arial",16))
 
 Buttons = []
 
+# Creating Buttons
 for btn in range(9):
     btn = tk.Button(root, text="", width=10, height=4)
     
@@ -131,6 +146,7 @@ for btn in range(9):
 title.grid(row=0, column=0, columnspan=3)
 lable.grid(row=1, column=0, columnspan=3) 
 
+# Arranging Buttons in Grid Layout
 for index,btn in enumerate(Buttons):
     row = index // 3
     col = index % 3
